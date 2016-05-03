@@ -1,0 +1,51 @@
+<%= form_for(@workout) do |f| %>
+  <% if @workout.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workout.errors.count, "error") %> prohibited this workout from being saved:</h2>
+
+      <ul>
+      <% @workout.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <% days = {0 => 'Sunday',1 => 'Monday',2 => 'Tuesday',3 => 'Wednesday',4 => 'Thursday',5 => 'Friday',6 => 'Saturday'}%>
+  <% days.each do |index, day| %>
+    <div class="day-<%= index %>">
+
+      <h3><%= day %></h3>
+
+      <% for i in 0..3 %>
+        <div class="exe-<%= i %>">
+          <div class="field">
+            <label>Choose exercise <%= i %></label><br>
+            <select name="exercises">
+              <% @exercises.each do |exercise| %>
+                <option value="<%= exercise.id %>"><%= exercise.name %></option>
+              <% end%>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>How many sets</label><br>
+            <input type="text" name="num_sets" value="">
+          </div>
+
+          <div class="field">
+            <label>how many reps</label><br>
+            <input type="text" name="num_reps" value="">
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="actions">
+    <button type="button" id="submit">Create</button>
+  </div>
+<% end %>
